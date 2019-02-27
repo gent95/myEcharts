@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zzhy.moudles.now.dao.EchtOptionDao">
+  <resultMap type="java.util.HashMap" id="resultMap">
+    <result property="col" column="COL"/>
+    <result property="com" column="COM"/>
+  </resultMap>
+    <select id="selectComment" resultMap="resultMap">
+      select temp.column_name col,temp.comments com
+      from (
+        select col.column_id,
+        col.column_name,
+        col.data_type,
+        colc.comments,
+        uc.constraint_type,
+        -- 去重
+        row_number() over (partition by col.column_name order by uc.constraint_type desc) as row_flg
+        from user_tab_columns col
+        left join user_col_comments colc
+        on colc.table_name = col.table_name
+        and colc.column_name = col.column_name
+        left join user_cons_columns ucc
+        on ucc.table_name = col.table_name
+        and ucc.column_name = col.column_name
+        left join user_constraints uc
+        on uc.constraint_name = ucc.constraint_name
+        where col.table_name = 'ECHT_OPTION'
+        ) temp
+        where temp.row_flg = 1
+        order by temp.column_id
+    </select>
+</mapper>

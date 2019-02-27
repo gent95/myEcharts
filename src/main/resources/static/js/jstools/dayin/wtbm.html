@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>test</title>
+<script language="javascript" src="LodopFuncs.js"></script>
+<object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>
+	<embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0 pluginspage="install_lodop.exe"></embed>
+</object>
+
+</head>
+<!--loadprint();-->
+<body onload="loadprint();">
+<div id="box">
+	<div id="box1" style="width:500px;height:270px;margin:10px;">
+	<style>
+		table{
+			border: 1px solid rgb(0, 0, 0);
+		}
+		td{
+			border: 1px solid rgb(0, 0, 0); 
+			border-image: none; 
+			height: 20px; 
+			font-family: 黑体; 
+			font-size: 20px;
+		}
+		.td_h{
+			height: 30px;
+		}
+		.td_b{
+			font-size: 30px;
+			padding-left:5px;
+		}
+	</style>
+		<table cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+					<td class="td_h" colspan="2">供应链               888346908706</td>
+				</tr>
+				<tr>
+					<td style="width:200px" >收件:张勇</td>
+					<td class="td_b" style="width:57px"  rowspan="4">衡水</td>
+				</tr>
+				<tr>
+					<td>件数:1/2</td>
+				</tr>
+				<tr>
+					<td>电话:</td>
+				</tr>
+				<tr>
+					<td>地址:衡水市胜利西路24号</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+<div>
+
+<script language="javascript" type="text/javascript">
+	function prn1_preview() {	
+		CreateOneFormPage();	
+		LODOP.PREVIEW();	
+	};
+	function prn1_print() {		
+		CreateOneFormPage();
+		LODOP.PRINT();	
+	};
+	function CreateOneFormPage(){
+		LODOP=getLodop();
+		LODOP.SET_PRINT_PAGESIZE(5,"24cm", "24cm", "");
+		LODOP.ADD_PRINT_HTM(5, 5, "24cm", "24cm", document.getElementById("box").innerHTML);
+		LODOP.SET_PRINT_MODE("PRINT_PAGE_PERCENT", "Full-Width");
+		
+	};
+function loadprint(){
+	prn1_preview();
+	//setTimeout("window.opener=null;window.open('','_top');window.top.close();",500);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.opt_btn{
+    margin-left: 40px;
+    display: inline;
+}
+
+.option_in{
+    width: 60%;
+}
+

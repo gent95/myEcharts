@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zzhy.moudles.now.dao.EchtSqlDao">
+   <select id="selectByOptId" resultType="com.zzhy.moudles.now.entity.EchtSqlEntity" parameterType="integer">
+       select a.* from echt_sql a
+        left join echt_sql_elmt c on a.id = c.sqlId
+        left JOIN echt_option b on b.id = c.optId
+        where 1=1
+        <if test="null != optId and optId != 0">
+            and c.optId = #{optId}
+        </if>
+   </select>
+
+    <select id="selectSqlElmtVo" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+        select b.type,b.optId,a.code,a.param,b.elmtId,a.describe,b.field from echt_sql a
+        left join echt_sql_elmt b on a.id = b.sqlId
+        where a.isDelete = 0 and b.optId = #{optId}
+    </select>
+
+    <select id="excu_sql" parameterType="java.lang.String" resultType="java.util.LinkedHashMap">
+        ${sql}
+    </select>
+</mapper>

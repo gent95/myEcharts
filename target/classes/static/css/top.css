@@ -1,0 +1,50 @@
+body,ul{margin:0px;padding:0px;}
+body{font-size:12px;}
+ul{list-style:none;}
+#zz_top{width:100%;height:80px;background:url(../images/navigation_files/logo_bg.jpg); position:relative; z-index:0;}
+.top_l{
+	float:left;
+	width:1325px;
+	height:77px;
+	background:url(../images/navigation_files/logo.png) no-repeat;
+	position:absolute;
+}
+.top_r{float:right;width:33%;height:80px;background:url(../images/navigation_files/logo_r.jpg) no-repeat;}
+.top_nav{
+	position:absolute;
+	margin-top:20px;
+	left: 817px;
+	width: 156px;
+	top: 14px;
+}
+.top_nav li{float:left;margin-right:10px;width:66px;height:21px;background:url(../images/navigation_files/buttons.jpg) no-repeat;text-align:center;line-height:21px;}
+.top_nav a{color:#8ae3ff;font-weight:normal;text-decoration:none;}
+.address{
+	position:absolute;
+	top:13px;
+	left:820px;
+	color:#fbf2b5;
+	width: 100px;
+	height: 12px;
+}
+* { padding: 0; margin: 0; }
+li { list-style: none; }
+img { border: none; }
+.dictselect {
+	padding-top: 90%;
+	position:absolute;
+	color:#fbf2b5;
+	top:15px;
+	left:1000px;
+	}
+.time {  padding: 10px 0;
+	position:absolute;
+	top:30px;
+	left:1000px;
+ }
+
+
+.pos2 { margin-left:10px; width: 33px; }
+.num { width: 10px; }
+.num2 { width: 17px; }
+.num3 { width: 12px; }

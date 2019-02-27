@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zzhy.moudles.now.dao.EchtOptionDao">
+    <select id="selectComment" resultType="java.util.HashMap">
+        SELECT a.name col, convert(varchar(100), isnull(g.[value],'')) com
+        FROM   syscolumns   a
+        inner   join   sysobjects   d  on  a.id=d.id
+        left   join   sys.extended_properties   g   on   a.id=g.major_id   and   a.colid=g.minor_id
+        where   d.name='echt_option'
+        order   by   a.id,a.colorder
+    </select>
+</mapper>

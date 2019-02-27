@@ -1,0 +1,8 @@
+[
+  {"id":"all","text":"全部"},
+  {"id":"yAxis","text":"y轴"},
+  {"id":"xAxis","text":"x轴"},
+  {"id":"legend","text":"图例"},
+  {"id":"toolbox","text":"工具箱"},
+  {"id":"title","text":"标题"}
+]

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>配置界面</title>
+    <link href="../js/easyui/themes/gray/easyui.css" rel="stylesheet" type="text/css"/>
+    <!-- 导入Easy UI的图标Css文件 -->
+    <link href="../js/easyui/themes/icon.css" rel="stylesheet" type="text/css"/>
+    <script src="../js/easyui/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/easyui/jquery.easyui.min.js" type="text/javascript"></script>
+    <script src="../js/easyui/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
+    <script src="../js/easyui/extEasyUI.js" type="text/javascript"></script>
+    <script src="../js/easyui/extJquery.js" type="text/javascript"></script>
+    <script src="../js/easyui/datagrid-detailview.js" type="text/javascript"></script>
+    <script src="../js/mock.js" type="text/javascript"></script>
+    <script src="../js/controller.js" type="text/javascript"></script>
+    <script src="../js/parse/easyui.js" type="text/javascript"></script>
+    <script src="../js/template.js" type="text/javascript"></script>
+    <script src="../js/parse/easyui.js" type="text/javascript"></script>
+    <script src="../js/echarts.min.js"></script>
+
+    <!--CodeMirror-->
+    <script src="../js/codemirror-5.40.2/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="../js/codemirror-5.40.2/lib/codemirror.css">
+    <script src="../js/codemirror-5.40.2/mode/clike/clike.js"></script> <!--引入css文件，用以支持主题-->
+    <script src="../js/codemirror-5.40.2/mode/sql/sql.js"></script>
+    <script src="../js/codemirror-5.40.2/mode/javascript/javascript.js"></script>
+    <link rel="stylesheet" href="../js/codemirror-5.40.2/theme/eclipse.css">
+    <link rel="stylesheet" href="../js/codemirror-5.40.2/theme/idea.css">
+    <link rel="stylesheet" href="../js/codemirror-5.40.2/theme/seti.css">
+    <link rel="stylesheet" href="../js/codemirror-5.40.2/theme/dracula.css"> <!--支持代码折叠-->
+    <link rel="stylesheet" href="../js/codemirror-5.40.2/addon/fold/foldgutter.css"/>
+    <script src="../js/codemirror-5.40.2/addon/fold/foldcode.js"></script>
+    <script src="../js/codemirror-5.40.2/addon/fold/foldgutter.js"></script>
+    <script src="../js/codemirror-5.40.2/addon/fold/brace-fold.js"></script>
+    <script src="../js/codemirror-5.40.2/addon/fold/comment-fold.js"></script> <!--全屏模式-->
+    <link rel="stylesheet" href="../js/codemirror-5.40.2/addon/display/fullscreen.css">
+    <script src="../js/codemirror-5.40.2/addon/display/fullscreen.js"></script> <!--括号匹配-->
+    <script src="../js/codemirror-5.40.2/addon/edit/matchbrackets.js"></script> <!--自动补全-->
+    <link rel="stylesheet" href="../js/codemirror-5.40.2/addon/hint/show-hint.css">
+    <script src="../js/codemirror-5.40.2/addon/hint/show-hint.js"></script>
+    <script src="../js/codemirror-5.40.2/addon/hint/anyword-hint.js"></script>
+    <script src="../js/codemirror-5.40.2/lib/formatter.js"></script>
+    <style type="text/css">
+        textarea{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'west',split:true,collapsible:false"
+         style="height:100%;width:50%;overflow:hidden;">
+        <div style="height: 50%;">
+            <table id="dg_option" title="面板列表" class="easyui-datagrid" fit="true"
+                   url="/option/list" toolbar="#toolbarOption" fitColumns="true" singleSelect="true"
+                   border="true" nowrap="true" style="height:50%;width:100%;">
+                <thead>
+                <tr>
+                    <th data-options="field:'id',width:100,align:'center'">编号</th>
+                    <th data-options="field:'name',width:100,align:'center'">标题</th>
+                    <th data-options="field:'remark',width:100,align:'center'">描述</th>
+                    <th data-options="field:'status',width:100,align:'center',formatter:statusFmt">状态</th>
+                    <th data-options="field:'create_time',width:100,align:'center'">创建时间</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div id="toolbarOption" class="easyui-layout"
+             style="width:100%; padding-left: 20px;">
+            <a href="javascript:void(0);" class="easyui-linkbutton"
+               iconCls="icon-add" plain="true" onclick="newOption()">添加</a>
+            <a href="javascript:void(0);" class="easyui-linkbutton"
+               iconCls="icon-edit" plain="true" onclick="editOption()">修改</a>
+            <a href="javascript:void(0);" class="easyui-linkbutton"
+               iconCls="icon-remove" plain="true" onclick="removeOption()">删除</a>
+            <a href="javascript:void(0);" class="easyui-linkbutton"
+               iconCls="icon-search" plain="true" onclick="lookOption()">预览</a>
+            <a href="javascript:void(0);" class="easyui-linkbutton"
+               iconCls="icon-ok" plain="true" onclick="onOption()">启用</a>
+            <a href="javascript:void(0);" class="easyui-linkbutton"
+               iconCls="icon-no" plain="true" onclick="offOption()">禁用</a>
+        </div>
+        <div style="height: 50%">
+            <table id="dg_sql" title="数据列表" class="easyui-datagrid" fit="true"
+                   toolbar="#toolbarSql" fitColumns="true" singleSelect="true"
+                   border="true" nowrap="true" style="height:50%;width:100%;">
+                <thead>
+                <tr>
+                    <th data-options="field:'id',width:50,align:'center'">编号</th>
+                    <th data-options="field:'name',width:100,align:'center'">数据名称</th>
+                    <th data-options="field:'type',width:100,align:'center',formatter:typeFmt">图表类型</th>
+                    <th data-options="field:'sort',width:50,align:'center'">顺序</th>
+                    <!--<th data-options="field:'sql_param',width:50,align:'center'">SQL参数</th>-->
+                    <th data-options="field:'radius',width:100,align:'center',formatter:radiusFmt">半径</th>
+                    <th data-options="field:'status',width:100,align:'center',formatter:statusFmt">状态</th>
+                    <th data-options="field:'create_time',width:100,align:'center'">创建时间</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div id="toolbarSql" class="easyui-layout"
+             style="width:100%; padding-left: 20px;">
+            <a href="javascript:void(0);" class="easyui-linkbutton"
+               iconCls="icon-add" plain="true" onclick="newSql()">添加</a>
+            <a href="javascript:void(0);" class="easyui-linkbutton"
+               iconCls="icon-edit" plain="true" onclick="editSql()">修改</a>
+            <a href="javascript:void(0);" class="easyui-linkbutton"
+               iconCls="icon-remove" plain="true" onclick="removeSql()">删除</a>
+            <a href="javascript:void(0);" class="easyui-linkbutton"
+               iconCls="icon-ok" plain="true" onclick="onSql()">启用</a>
+            <a href="javascript:void(0);" class="easyui-linkbutton"
+               iconCls="icon-no" plain="true" onclick="offSql()">禁用</a>
+        </div>
+    </div>
+    <div data-options="region:'east',split:true,collapsible:false"
+         style="height:100%;width:50%;overflow:hidden;">
+        <div id="tt" class="easyui-tabs" style="width:100%;height:100%;overflow: hidden">
+            <div id="option" title="面板" style="padding-right: 100px;">
+                <form id="fm_option" method="post" novalidate
+                      style="margin:0;padding:20px 50px; width: 100%; height: 100%;">
+                    <div style="margin-bottom:10px">
+                        <input id="option_id" labelWidth="40px" name="id" readonly class="easyui-numberbox"
+                               readonly="readonly"
+                               label="编号:" style="width:15%"/>
+                        <input id="option_name" labelWidth="40px" name="name" class="easyui-textbox" required="true"
+                               label="标题:" style="width:30%"/>
+                        <input id="option_remark" labelWidth="40px" name="remark" class="easyui-textbox" required="true"
+                               label="描述:" style="width:40%"/>
+                        <div id="yType" style="display: inline;">
+                            <input type="checkbox" id="y_type"/>Y轴系统默认
+                        </div>
+                    </div>
+                    <div id="option_json_box">
+                        <p style="font-size: 14px">json:<em>("F7":格式化代码,"F11":全屏编辑)</em></p>
+                        <div>
+                            <input class="easyui-combobox" name="optionSelect" style="width:200px;" id="optionSelect"
+                                   data-options="url:'../js/echarts/config.json',method:'get',valueField:'id',textField:'text',label: '配置项:',labelPosition: 'left',labelWidth:70,editable:false">&nbsp;&nbsp;&nbsp;
+                            <a id="option_ok" class="easyui-linkbutton" iconCls = "icon-ok" onclick="option_ok()">确认</a>&nbsp;&nbsp;&nbsp;
+                            <a id="reset" class="easyui-linkbutton" iconCls="icon-reload" onclick="reset()">一键重置</a>
+                        </div>
+                        <textarea id="option_json" name="option_json"></textarea>
+                        <p style="font-size: 14px">JavaScript:<em>("F7":格式化代码,"F11":全屏编辑)</em></p>
+                        <div>
+                            <select id="eventJs" class="easyui-combobox" label="图表事件:" style="width: 200px">
+                                <option value="click">鼠标点击</option>
+                                <option value="dbclick">鼠标双击</option>
+                                <option value="mousedown">鼠标向下滑动</option>
+                                <option value="mouseup">鼠标向上滑动</option>
+                            </select>
+                        </div>
+                        <textarea id="option_script" name="option_script"></textarea>
+                    </div>
+                    <div style="margin-bottom:10px">
+                        <a href="javascript:void(0);" class="easyui-linkbutton"
+                           iconCls="icon-save" plain="true" onclick="saveOption()">保存</a>
+                    </div>
+                </form>
+            </div>
+
+            <div id="sql" title="数据" style="padding-right: 100px;">
+                <form id="fm_sql" method="post" novalidate
+                      style="margin:0;padding:20px 50px; width: 100%; height: 100%;">
+                    <div style="margin-bottom:10px">
+                        <input id="sql_id" labelWidth="40px" readonly name="id" class="easyui-numberbox"
+                               readonly="readonly"
+                               label="编号:" style="width:15%"/>
+                        <input id="sql_name" labelWidth="80px" name="name" class="easyui-textbox" required="true"
+                               label="数据名称:" style="width:30%"/>
+                        <br><br>
+                        <input id="sql_sort" labelWidth="40px" name="sort" class="easyui-numberbox" required="true"
+                               label="顺序:" style="width:10%"/>
+                        <select id="sql_type" name="type" class="easyui-combobox" labelWidth="40px" label="类型:"
+                                editable="false" style="width: 200px;">
+                            <option value="pie">饼图</option>
+                            <option value="line">折线图</option>
+                            <option value="bar">柱状图</option>
+                            <option value="xAis">x轴</option>
+                            <option value="yAis">y轴</option>
+                        </select>
+                        <div id="pie_box" style="margin-top: 10px">
+                            <select id="pie_select" labelWidth="80px" name="pie_select" editable="false"
+                                    style="width: 200px;" class="easyui-combobox" label="饼图类型:">
+                                <option value="full">实心</option>
+                                <option value="empty">空心</option>
+                            </select>
+                            <div id="full" style="display: inline">
+                                <input id="all_radius" labelWidth="40px" name="all_radius" class="easyui-numberbox" required="true"
+                                       label="半径:">
+                            </div>
+                            <div id="empty" style="display: inline">
+                                <input id="in_radius" labelWidth="60px" name="in_radius" class="easyui-numberbox" required="true"
+                                       label="内半径:">
+                                <input id="out_radius" labelWidth="60px" name="out_radius" class="easyui-numberbox" required="true"
+                                       label="外半径:">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="sql_box">
+                        <input id="sql_param" labelWidth="70px" name="sql_param" class="easyui-textbox" required="true" data-options="multiline:true"
+                               label="SQL参数:" style="width:60%; height: 100px;"/><em>(多个参数"&"隔开,如;key1=value1&key2=value2)</em><br/>
+                        <h4>sql:<em>(柱状图或折线图,数据列只有一列且别名为"value";饼状图则需两列数据,别名分别为"name,value")</em></h4>
+                        <textarea id="e_sql" name="sql"></textarea>
+                    </div>
+
+                    <div style="margin-bottom:10px">
+                        <a href="javascript:void(0);" class="easyui-linkbutton"
+                           iconCls="icon-redo" plain="true" onclick="executeSql()">执行</a>
+                        <a href="javascript:void(0);" class="easyui-linkbutton"
+                           iconCls="icon-save" plain="true" onclick="saveSql()">保存</a>
+                    </div>
+
+                    <div id="result_box">
+                        <h4>查询结果:</h4>
+                        <textarea id="result"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div id="look" title="预览" style="padding-right: 100px;overflow: hidden;"></div>
+        </div>
+    </div>
+</div>
+<script src="../js/echarts/make.js"></script>
+</body>
+</html>

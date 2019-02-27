@@ -1,0 +1,196 @@
+
+body,div,dt,dd,dt,table,p,hr,span,input{ margin:0 auto;
+ padding:0;}
+a{ text-decoration:none;}
+body{ color:#000000; font-family: "宋体"; font-size:12px; background-color:#FFFFFF;}
+
+
+.denglu{ width:988px; height:586px; background:url(../images/denglukuang.png) no-repeat;}
+.wenzi{ float:left; position:absolute; top:400px; left:160px; line-height:20px;}
+.wenzi span{ margin-right:15px;}
+.wenzi ul li{ list-style:none; float:left; margin-top:400px;}
+
+
+
+.login{ width:500px; height:250px; margin-top:200px; float:right; margin-right:350px; display:block;
+	background:url(../images/denglukuang.png) no-repeat;
+}
+.login span{font-weight:bold;line-height:25px; float:left;}
+.jizhu input,.jizhu span{ float: left; line-height:13px; margin-right:5px;}
+.yhm,.mima,.jizhu{ height:50px;margin-top: 100px;margin-left: 40px;}
+.yewu{
+	display:none;
+}
+.backjpg{
+	width:1366px;
+	height:650px;
+	background: url(../images/wood_pattern.jpg);
+}
+.yhm input,.mima input,.yewu select{ border:1px solid #7f9db9; width:160px; height:25px; line-height:25px; padding-left:5px;}
+.login_button{ text-align:center;margin-top:60px;margin-right:200px;}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 9pt;
+}
+
+#login {
+    margin: auto;
+    width: 1024px;
+    height: 368px;
+    margin-top: 40px;
+}
+
+#top_left {
+    width: 740px;
+    height: 30px;
+    float: left;
+}
+
+#top_left img {
+    margin-left: 33px;
+}
+
+#top_center {
+    width: 248px;
+    height: 50px;
+    background: url(../images/login/login_051111.jpg);
+    float: left;
+}
+
+#password input {
+    width: 120px;
+    height: 20px;
+}
+
+ul {
+    list-style: none;
+}
+
+.top li {
+    float: left;
+    color: #000;
+    line-height: 42px;
+    font-size: 12px;
+    margin-left: 30px;
+    _margin-top: 15px;
+}
+
+.top li img {
+    margin-right: 5px;
+}
+
+#center_left {
+    width: 740px;
+    height: 330px;
+    background: url(../images/login/login_09.jpg);
+    float: left;
+}
+
+#center_middle {
+    width: 248px;
+    height: 330px;
+    float: left;
+    background: url(../images/login/login_13.gif) repeat-y;
+}
+
+#center_right {
+    width: 36px;
+    height: 330px;
+    float: right;
+    background: url(../images/login/login_11.jpg);
+}
+
+#down_left {
+    width: 740px;
+    height: 38px;
+    float: left;
+    margin-top: 15px;
+}
+
+#down_center {
+    width: 248px;
+    height: 5px;
+    background: url(../images/login/login_16.jpg) no-repeat;
+    float: left;
+}
+
+#inf {
+    width: 740px;
+    height: 38px;
+    background: url(../images/login/login_18.gif) no-repeat;
+}
+
+.inf_text {
+    display: block;
+    width: 100px;
+    height: 20px;
+    font-size: 16px;
+    font-weight: bolder;
+    color: #fff;
+    margin-left: 17px;
+    margin-top: 12px;
+    float: left;
+}
+
+.copyright {
+    display: block;
+    float: left;
+    margin-left: 17px;
+    margin-top: 15px;
+}
+
+#user {
+    margin-left: 40px;
+    margin-top: 25px;
+    height: 25px;
+}
+
+#password {
+    margin-left: 40px;
+    margin-top: 25px;
+    height: 25px;
+}
+
+#distdiv {
+    margin-left: 40px;
+    margin-top: 25px;
+    height: 25px;
+}
+
+input {
+    width: 120px;
+    height: 18px;
+    border: solid 1px #aca7a7;
+    font-size: 9pt;
+}
+
+#btn {
+    margin-left: 0px;
+    margin-top: 40px;
+    height: 25px;
+    margin-right: 0px;
+    text-align: center;
+    width: 100%
+}
+
+#btn a {
+    display: block;
+    line-height: 25px;
+    background: url(../images/login/bt_bg.gif);
+    border: solid 1px #b6b6b6;
+    width: 65px;
+    float: left;
+    margin-left: 15px;
+    text-decoration: none;
+    color: #000;
+}
+
+#btn input.button {
+    background: url(../images/login/bt_bg.gif);
+    border: solid 1px #b6b6b6;
+    color: #000;
+}
+

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>echarts</title>
+    <link href="../js/easyui/themes/gray/easyui.css" rel="stylesheet" type="text/css"/>
+    <!-- 导入Easy UI的图标Css文件 -->
+    <link href="../js/easyui/themes/icon.css" rel="stylesheet" type="text/css"/>
+    <script src="../js/easyui/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/easyui/jquery.easyui.min.js" type="text/javascript"></script>
+    <script src="../js/easyui/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
+    <script src="../js/easyui/extEasyUI.js" type="text/javascript"></script>
+    <script src="../js/easyui/extJquery.js" type="text/javascript"></script>
+    <script src="../js/easyui/datagrid-detailview.js" type="text/javascript"></script>
+    <script src="../js/mock.js" type="text/javascript"></script>
+    <script src="../js/controller.js" type="text/javascript"></script>
+    <script src="../js/parse/easyui.js" type="text/javascript"></script>
+    <script src="../js/template.js" type="text/javascript"></script>
+    <script src="../js/parse/easyui.js" type="text/javascript"></script>
+    <script src="../js/echarts.min.js"></script>
+    <script src="../js/common.js"></script>
+</head>
+<body scroll="no" style="text-align:center;">
+<div id='myChart' style='width: 100%;height:500px;margin:0 auto;'></div>
+<script type="text/javascript">
+    var id = getUrlParamfunction("optId");
+    var hrefId = getUrlParamfunction("hrefId");
+    var sqlParam = decodeURIComponent(document.location.toString().split("?")[1]);
+    $(function () {
+        _ajax({
+            url:'/now/echtoption/info1',
+            data:{hrefId: hrefId},
+            success:function (result) {
+                if (result.code == 0) {
+                    id = result.id;
+                }
+            }
+        });
+
+        $.post("/now/echtoption/info", {id:id}, function (result) {
+            $.post("/now/echtsql/getData1", genParamObj(sqlParam), function (result1) {
+                load("正在加载....")
+                if (result.code == 0 && result1.code == 0) {
+                    disLoad();
+                    var myChart = echarts.init(document.getElementById('myChart'));
+                    var option = result.info;
+                    var option1 = {};
+                    for (x in option) {
+                        if (x == "id" || x == "hrefId" || option[x] == null || option[x] == "" || option[x] == "null" || option[x] == "[]" || option[x] == "{}") {
+                            eval("delete option." + x);
+                        } else {
+                            var data = result1.data;
+                            if (x) {
+                                eval("option1." + x + "=" + option[x]);
+                            }
+                            if (x == "series") {
+                                for (var i = 0; i < option1.series.length; i++) {
+                                    var s = option1.series[i];
+                                    for (var j = 0; j < data.length; j++) {
+                                        if (s.id == data[j].elmtId) {
+                                            if (s.type == "pie") {
+                                                s.data = genPieData(data[j].field, data[j].data);
+                                            } else {
+                                                eval("s.data = data[j].data." + data[j].field);
+                                            }
+                                        }
+                                    }
+                                }
+                            } else if (x == "yAxis") {
+                                for (var i = 0; i < option1.yAxis.length; i++) {
+                                    var y = option1.yAxis[i];
+                                    for (var j = 0; j < data.length; j++) {
+                                        if (y.id == data[j].elmtId) {
+                                            y.data = data[j].data;
+                                            // alert(data[j].field)
+                                            // eval("y.data = data[j].data."+data[j].field);
+                                        }
+                                    }
+                                }
+                            } else if (x == "xAxis") {
+                                for (var i = 0; i < option1.xAxis.length; i++) {
+                                    var x = option1.xAxis[i];
+                                    for (var j = 0; j < data.length; j++) {
+                                        if (x.id == data[j].elmtId) {
+                                            // x.data = data[j].data;
+                                            eval("x.data = data[j].data." + data[j].field);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    myChart.setOption(option1);
+                    window.onresize = function () {
+                        myChart.resize();
+                    };
+                } else {
+                    disLoad();
+                    if (result1.msg != "操作成功") {
+                        alert(result1.msg);
+                    } else if (result.msg != "操作成功") {
+                        alert(result.msg);
+                    }
+                }
+            });
+        });
+    });
+
+    function getStyle(el, name) {
+        if (window.getComputedStyle) {
+            return window.getComputedStyle(el, null);
+        } else {
+            return el.currentStyle;
+        }
+    }
+
+    function getUrlParamfunction(paraName) {
+        var url = document.location.toString();
+        var arrObj = url.split("?");
+        if (arrObj.length > 1) {
+            var arrPara = arrObj[1].split("&");
+            var arr;
+            for (var i = 0; i < arrPara.length; i++) {
+                arr = arrPara[i].split("=");
+                if (arr != null && arr[0] == paraName) {
+                    return arr[1];
+                }
+            }
+            return "";
+        } else {
+            return "";
+        }
+    }
+
+    function genParamObj(hrefStr) {
+        var obj = {};
+        var str = hrefStr.split("&");
+        for (var i = 0; i < str.length; i++) {
+            var a = str[i].split("=");
+            eval("obj." + a[0] + "='" + a[1] + "'");
+        }
+        obj.optId = id;
+        return obj;
+    }
+
+    //弹出加载层
+    function load(tip) {
+        $("<div class=\"datagrid-mask\"></div>").css({
+            display: "block",
+            width: "100%",
+            height: $(window).height()
+        }).appendTo("body");
+        $("<div class=\"datagrid-mask-msg\"></div>").html(tip).appendTo("body").css({
+            display: "block",
+            left: ($(document.body).outerWidth(true) - 190) / 2,
+            top: ($(window).height() - 45) / 2
+        });
+    }
+
+    //取消加载层
+    function disLoad() {
+        $(".datagrid-mask").remove();
+        $(".datagrid-mask-msg").remove();
+    }
+
+    /**
+     * 构造饼图数据结构
+     */
+    function genPieData(fieldstr, elmtdata) {
+        var field = fieldstr.split(",");
+        var dataArray = [];
+        var names = eval("elmtdata." + field[0]);
+        var values = eval("elmtdata." + field[1]);
+        for (var i = 0; i < names.length; i++) {
+            var data = {};
+            data.name = names[i];
+            data.value = values[i];
+            dataArray.push(data);
+        }
+        return dataArray;
+    }
+</script>
+</body>
+</html>

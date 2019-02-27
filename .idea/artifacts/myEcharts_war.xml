@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="myEcharts:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="myEcharts-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="myEcharts:war exploded" />
+    </root>
+  </artifact>
+</component>
