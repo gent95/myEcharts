@@ -10,8 +10,7 @@ import com.zzhy.common.annotation.SysLog;
 import com.zzhy.common.util.Constant;
 import com.zzhy.common.util.HttpContextUtils;
 import com.zzhy.common.util.IPUtils;
-import com.zzhy.moudles.old.entity.SysLogEntity;
-import com.zzhy.moudles.old.service.SysLogService;
+
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

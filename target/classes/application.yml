@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: orcl
+    active: mysql
   http.encoding.charset:  utf8
   mvc:
    static-path-pattern: /static/**
